@@ -461,16 +461,14 @@
                 <!-- Card 4: Orphan/School (2x) -->
                 <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
                     data-category="education">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop"
-                            alt="Kids"
-                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="relative h-48 overflow-hidden bg-emerald-50">
+                        <img src="./assets/images/pattanasat_logo.png" alt="Pattanasat Witaya School Logo"
+                            class="w-full h-full object-contain p-4 transform group-hover:scale-110 transition-transform duration-500">
                         <div
                             class="absolute top-4 right-4 bg-gold-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10 flex items-center gap-1">
                             <i data-lucide="check-check" class="w-3 h-3"></i> ลดหย่อน 2 เท่า
                         </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        <div class="absolute bottom-4 left-4 text-white">
+                        <div class="absolute bottom-4 left-4 text-white drop-shadow-md">
                             <span class="text-xs bg-purple-500 px-2 py-1 rounded">เด็กกำพร้า/การศึกษา</span>
                         </div>
                     </div>
@@ -480,11 +478,12 @@
                             โรงเรียนพัฒนศาสน์วิทยา จ.นราธิวาส</p>
 
                         <div class="flex flex-col gap-2">
-                            <a href="https://ischoolme.com/v2/pattanasathtv/index" target="_blank"
-                                class="flex-1 py-3 bg-white border-2 border-emerald-900 text-emerald-900 font-bold rounded text-center hover:bg-emerald-50 transition-colors duration-300 flex items-center justify-center gap-2">
-                                <i data-lucide="external-link" class="w-4 h-4"></i>
-                                ดูข้อมูลการบริจาค
-                            </a>
+                            <button
+                                onclick="openQR('./assets/images/pattanasat_qr.png', 'รร. พัฒนศาสน์วิทยา', 'e-Donation')"
+                                class="flex-1 py-3 bg-emerald-900 text-white font-bold rounded text-center hover:bg-emerald-800 transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md transform active:scale-95">
+                                <i data-lucide="qr-code" class="w-4 h-4"></i>
+                                สแกน QR Code
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -750,10 +749,10 @@
 
                     <!-- Footer -->
                     <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-2">
-                        <a id="download-btn" href="#" download="qrcode.png"
+                        <button id="download-btn" type="button"
                             class="inline-flex w-full justify-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 sm:ml-3 sm:w-auto gap-2 items-center">
                             <i data-lucide="download" class="w-4 h-4"></i> บันทึกรูป
-                        </a>
+                        </button>
                         <button type="button" onclick="closeQR()"
                             class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">
                             ปิดหน้าต่าง
@@ -777,10 +776,14 @@
         const qrOrgName = document.getElementById('qr-org-name');
         const downloadBtn = document.getElementById('download-btn');
 
+        let currentQrUrl = '';
+        let currentQrTitle = '';
+
         function openQR(imgUrl, title, type) {
+            currentQrUrl = imgUrl;
+            currentQrTitle = title;
             qrImage.src = imgUrl;
             qrOrgName.innerText = title;
-            downloadBtn.href = imgUrl;
 
             modal.classList.remove('hidden');
 
@@ -791,6 +794,58 @@
                 modalPanel.classList.add('scale-100', 'opacity-100');
             }, 10);
         }
+
+        async function downloadQR() {
+            if (!currentQrUrl) return;
+
+            const btn = document.getElementById('download-btn');
+            const originalContent = btn.innerHTML;
+
+            // Show loading state
+            btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-2 w-4 h-4 animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> กำลังบันทึก...`;
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(currentQrUrl);
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+                link.href = blobUrl;
+
+                // create safe filename
+                const safeTitle = currentQrTitle ?
+                    currentQrTitle.replace(/[^a-zA-Z0-9\u0E00-\u0E7F\s-]/g, '').trim().replace(/\s+/g, '_') :
+                    'qrcode';
+                link.download = `${safeTitle}_qrcode.png`;
+
+                document.body.appendChild(link);
+                link.click();
+
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(blobUrl);
+            } catch (error) {
+                console.error('Download failed:', error);
+                // Fallback: Try direct download (might open in new tab if CORS)
+                const link = document.createElement('a');
+                link.href = currentQrUrl;
+                link.download = 'qrcode.png';
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } finally {
+                // Restore button state
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                }, 1000);
+            }
+        }
+
+        downloadBtn.addEventListener('click', downloadQR);
 
         function closeQR() {
             modalBackdrop.classList.add('opacity-0');
