@@ -371,7 +371,8 @@
                 <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
                     data-category="education">
                     <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1549646875-182390f77761?q=80&w=800&auto=format&fit=crop"
+                        <img src="./assets/images/klongjilad_cover.jpg"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=Upload+Cover';"
                             alt="Education"
                             class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
                         <div
@@ -390,7 +391,7 @@
 
                         <div class="flex flex-col gap-2">
                             <button
-                                onclick="openQR('https://www.kasikornbank.com/SiteCollectionDocuments/promotion/e-donation23-11-22/img/qrcode/2023/099400209679598.png', 'รร. มัสยิดคลองจิหลาดอุปถัมภ์', 'e-Donation')"
+                                onclick="openQR('./assets/images/klongjilad_qr.png', 'รร. มัสยิดคลองจิหลาดอุปถัมภ์', 'e-Donation')"
                                 class="flex-1 py-3 bg-emerald-900 text-white font-bold rounded text-center hover:bg-emerald-800 transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md transform active:scale-95">
                                 <i data-lucide="qr-code" class="w-4 h-4"></i>
                                 สแกน QR Code
@@ -462,7 +463,9 @@
                 <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
                     data-category="education">
                     <div class="relative h-48 overflow-hidden bg-emerald-50">
-                        <img src="./assets/images/pattanasat_logo.png" alt="Pattanasat Witaya School Logo"
+                        <img src="./assets/images/pattanasat_logo.png"
+                            onerror="this.onerror=null; this.src='https://placehold.co/400x400?text=Upload+Logo';"
+                            alt="Pattanasat Witaya School Logo"
                             class="w-full h-full object-contain p-4 transform group-hover:scale-110 transition-transform duration-500">
                         <div
                             class="absolute top-4 right-4 bg-gold-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10 flex items-center gap-1">
@@ -523,8 +526,9 @@
                 <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
                     data-category="medical">
                     <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1516574187841-693083f69802?q=80&w=800&auto=format&fit=crop"
-                            alt="Hospital"
+                        <img src="./assets/images/betong_cover.jpg"
+                            onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=Upload+Betong+Image';"
+                            alt="Betong Hospital"
                             class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
                         <div
                             class="absolute top-4 right-4 bg-gold-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10 flex items-center gap-1">
@@ -538,14 +542,14 @@
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-emerald-900 mb-2">โรงพยาบาลเบตง</h3>
                         <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-                            โครงการจัดซื้อครุภัณฑ์ทางการแพทย์โรงพยาบาลเบตง</p>
+                            สมทบทุนจัดซื้อครุภัณฑ์ทางการแพทย์ โดย นพ.อารยะ ไข่มุกด์ (ผู้อำนวยการ)</p>
 
                         <div class="flex flex-col gap-2">
-                            <a href="https://www.facebook.com/profile.php?id=100069188644843" target="_blank"
-                                class="flex-1 py-3 bg-white border-2 border-emerald-900 text-emerald-900 font-bold rounded text-center hover:bg-emerald-50 transition-colors duration-300 flex items-center justify-center gap-2">
-                                <i data-lucide="facebook" class="w-4 h-4"></i>
-                                ติดต่อบริจาค
-                            </a>
+                            <button onclick="openQR('./assets/images/betong_qr.png', 'โรงพยาบาลเบตง', 'e-Donation')"
+                                class="flex-1 py-3 bg-emerald-900 text-white font-bold rounded text-center hover:bg-emerald-800 transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md transform active:scale-95">
+                                <i data-lucide="qr-code" class="w-4 h-4"></i>
+                                สแกน QR Code
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -737,6 +741,7 @@
                                     class="absolute -inset-1 bg-gradient-to-r from-emerald-500 via-gold-500 to-emerald-500 rounded-2xl opacity-30 blur group-hover:opacity-50 transition duration-1000 animate-pulse">
                                 </div>
                                 <img id="qr-image" src="" alt="QR Code"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/300x300?text=QR+Not+Found';"
                                     class="relative w-64 h-64 object-contain mx-auto rounded-lg">
                             </div>
 
