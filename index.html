@@ -274,21 +274,22 @@
 
             <!-- Filter Buttons -->
             <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <button class="px-6 py-2 rounded-full bg-emerald-900 text-white shadow-lg">ทั้งหมด</button>
-                <button
-                    class="px-6 py-2 rounded-full bg-cream-100 text-emerald-900 hover:bg-emerald-100 transition">การศึกษา
+                <button onclick="filterDonations('all')"
+                    class="filter-btn active px-6 py-2 rounded-full border border-emerald-900 bg-emerald-900 text-white shadow-lg transition-all duration-300">ทั้งหมด</button>
+                <button onclick="filterDonations('education')"
+                    class="filter-btn px-6 py-2 rounded-full border border-emerald-900 bg-cream-100 text-emerald-900 hover:bg-emerald-100 transition-all duration-300">การศึกษา
                     (2x)</button>
-                <button
-                    class="px-6 py-2 rounded-full bg-cream-100 text-emerald-900 hover:bg-emerald-100 transition">การแพทย์
+                <button onclick="filterDonations('medical')"
+                    class="filter-btn px-6 py-2 rounded-full border border-emerald-900 bg-cream-100 text-emerald-900 hover:bg-emerald-100 transition-all duration-300">การแพทย์
                     (2x)</button>
-                <button
-                    class="px-6 py-2 rounded-full bg-cream-100 text-emerald-900 hover:bg-emerald-100 transition">มัสยิด</button>
+                <button onclick="filterDonations('mosque')"
+                    class="filter-btn px-6 py-2 rounded-full border border-emerald-900 bg-cream-100 text-emerald-900 hover:bg-emerald-100 transition-all duration-300">มัสยิด</button>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="donation-grid">
                 <!-- Card 1: Education (2x) - HAS QR CODE -->
-                <div
-                    class="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
+                <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
+                    data-category="education">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1549646875-182390f77761?q=80&w=800&auto=format&fit=crop"
                             alt="Education"
@@ -319,8 +320,8 @@
                 </div>
 
                 <!-- Card 2: Hospital (2x) - External Link -->
-                <div
-                    class="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
+                <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
+                    data-category="medical">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=800&auto=format&fit=crop"
                             alt="Hospital"
@@ -340,19 +341,19 @@
                             สมทบทุนจัดซื้อเครื่องมือทางการแพทย์และสร้างอาคารผู้ป่วยเพื่อโรงพยาบาล</p>
 
                         <div class="flex flex-col gap-2">
-                            <a href="https://www.scb.co.th/th/personal-banking/other-services/e-donation/e-donationqr.html?page=h63"
-                                target="_blank"
-                                class="flex-1 py-3 bg-white border-2 border-emerald-900 text-emerald-900 font-bold rounded text-center hover:bg-emerald-50 transition-colors duration-300 flex items-center justify-center gap-2">
-                                <i data-lucide="external-link" class="w-4 h-4"></i>
-                                ไปที่หน้าบริจาค
-                            </a>
+                            <button
+                                onclick="openQR('./assets/images/sungaikolok_qr.png', 'โรงพยาบาลสุไหงโก-ลก', 'e-Donation')"
+                                class="flex-1 py-3 bg-emerald-900 text-white font-bold rounded text-center hover:bg-emerald-800 transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-md transform active:scale-95">
+                                <i data-lucide="qr-code" class="w-4 h-4"></i>
+                                สแกน QR Code
+                            </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Card 3: Mosque (1x) - HAS QR CODE -->
-                <div
-                    class="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
+                <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
+                    data-category="mosque">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1542044801-30d3e45ae49a?q=80&w=800&auto=format&fit=crop"
                             alt="Mosque"
@@ -379,8 +380,8 @@
                 </div>
 
                 <!-- Card 4: Orphan/School (2x) -->
-                <div
-                    class="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
+                <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
+                    data-category="education">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop"
                             alt="Kids"
@@ -410,8 +411,8 @@
                 </div>
 
                 <!-- Card 5: Hospital (2x) -->
-                <div
-                    class="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
+                <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
+                    data-category="medical">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=800&auto=format&fit=crop"
                             alt="Hospital"
@@ -441,8 +442,8 @@
                 </div>
 
                 <!-- Card 6: Hospital (2x) -->
-                <div
-                    class="group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2">
+                <div class="donation-card group bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden transform hover:-translate-y-2"
+                    data-category="medical">
                     <div class="relative h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1516574187841-693083f69802?q=80&w=800&auto=format&fit=crop"
                             alt="Hospital"
@@ -471,6 +472,44 @@
                     </div>
                 </div>
             </div>
+
+            <script>
+                function filterDonations(category) {
+                    const cards = document.querySelectorAll('.donation-card');
+                    const buttons = document.querySelectorAll('.filter-btn');
+
+                    // Update button states
+                    buttons.forEach(btn => {
+                        btn.classList.remove('bg-emerald-900', 'text-white');
+                        btn.classList.add('bg-cream-100', 'text-emerald-900');
+                        btn.classList.remove('active');
+
+                        if ((category === 'all' && btn.innerText === 'ทั้งหมด') ||
+                            (category === 'education' && btn.innerText.includes('การศึกษา')) ||
+                            (category === 'medical' && btn.innerText.includes('การแพทย์')) ||
+                            (category === 'mosque' && btn.innerText.includes('มัสยิด'))) {
+                            btn.classList.remove('bg-cream-100', 'text-emerald-900');
+                            btn.classList.add('bg-emerald-900', 'text-white');
+                            btn.classList.add('active');
+                        }
+                    });
+
+                    // Filter cards
+                    cards.forEach(card => {
+                        if (category === 'all' || card.dataset.category === category) {
+                            card.classList.remove('hidden');
+                            card.classList.add('block');
+                            // Add fade in animation
+                            card.style.animation = 'none';
+                            card.offsetHeight; /* trigger reflow */
+                            card.style.animation = 'fadeIn 0.5s ease-out forwards';
+                        } else {
+                            card.classList.add('hidden');
+                            card.classList.remove('block');
+                        }
+                    });
+                }
+            </script>
         </div>
     </section>
 
